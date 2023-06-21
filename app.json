@@ -1,0 +1,38 @@
+{
+  "expo": {
+    "name": "loginWithGoogle",
+    "slug": "loginWithGoogle",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "scheme" : "com.luan.authsessiongoogle",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.luan.authsessiongoogle"
+    },
+    "android": {
+      "package" : "com.luan.authsessiongoogle",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "32a47d64-b62f-4e85-b9e0-49af1157b4ca"
+      }
+    }
+  }
+}
