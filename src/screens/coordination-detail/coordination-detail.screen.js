@@ -221,6 +221,11 @@ console.log(id)
           })
         );
         setIsEnabled(true);
+        
+      }else{
+        navigation.goBack();
+        alert("Not permission to scan!")
+        
       }
     } catch (error) {
       setIsVisibleModal(false);
@@ -275,7 +280,7 @@ console.log(id)
                     onPressStation(item);
                   }}
                 >
-                  <Icon name="edit" size={24} />
+                  <Icon name="edit" size={24} color="blue"/>
                 </Pressable>
               </View>
             </>

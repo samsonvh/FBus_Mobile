@@ -43,6 +43,10 @@ const ProfileScreen = () => {
   console.log(userInfo)
   const UserData = [
     {
+      lable: "Name",
+      value: userInfo.userInfor.name,
+    },
+    {
       lable: "Code",
       value: userInfo.userInfor.code,
     },
@@ -71,7 +75,7 @@ const ProfileScreen = () => {
   };
   return (
     <Screen>
-      <Header backVisible={false} title={"Profile"} />
+      <Header backVisible={false} title={"PROFILE"} />
       <View style={{ alignContent: "center", alignItems: "center", paddingVertical : 30 }}>
         <Image
           style={styles.image}

@@ -11,22 +11,35 @@ import { all } from "axios";
 const HomeScreen = () => {
   const navigation = useNavigation();
   const [coordinations, setCoordinations] = useState([]);
-
-  useEffect(() => {
-    getCoordinationsService()
-      .then((res) => {
-        console.log(JSON.stringify(res));
-        if (res.statusCode === 200) {
-          setCoordinations(res.data);
-        } else {
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      getCoordinationsService()
+        .then((res) => {
+          console.log(JSON.stringify(res));
+          if (res.statusCode === 200) {
+            let newArr = [];
+            if (res.data.length != 0) {
+              res.data.forEach((element) => {
+                if (element.status === "FINISHED") {
+                  newArr.push(element);
+                } else {
+                  newArr.unshift(element);
+                }
+              });
+            }
+            setCoordinations(newArr);
+          } else {
+            alert("Internal server error");
+          }
+        })
+        .catch((error) => {
           alert("Internal server error");
-        }
-      })
-      .catch((error) => {
-        alert("Internal server error");
-        console.log("Err:", JSON.stringify(error));
-      });
-  }, []);
+          console.log("Err:", JSON.stringify(error));
+        });
+    });
+
+    return unsubscribe;
+  }, [navigation]);
 
   const onPressItem = (item) => {
     navigation.navigate(SCREENS.COORDINATION_DETAIL, {
@@ -38,7 +51,7 @@ const HomeScreen = () => {
 
   return (
     <Screen>
-      <Header title={"Home"} backVisible={false} />
+      <Header title={"HOME"} backVisible={false} />
       <View style={styles.container}>
         <FlatList
           data={coordinations}

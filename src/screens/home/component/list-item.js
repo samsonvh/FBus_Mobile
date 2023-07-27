@@ -5,16 +5,12 @@ import Icon from "react-native-vector-icons/FontAwesome";
 
 const ListItem = (props) => {
   const { data, onPress } = props;
-  const backgroundColor = data?.status === "ONGOING" ? "#0DB14B" : '#ec9054';
+  const backgroundColor = data?.status === "ACTIVE" ? "#0DB14B" : data?.status === "ONGOING" ?  "#0DB14B" : '#ec9054' ;
 
   return (
     
     <TouchableOpacity onPress={onPress} style={styles.container}>
       <Text style={styles.busCode}>{data?.bus?.code}</Text>
-      
-   
-      
-  
      
       <View style={styles.rowContainer}>
         <Icon name="arrow-circle-right" size={25} color='#0DB14B' />
@@ -48,7 +44,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     color: 'black',
-    marginTop: 5,
     borderRadius: 4,
 
   },
@@ -56,7 +51,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginLeft: 5,
-    padding: 10
+    padding: 5
   },
   beginning: {
     fontFamily: fonts.medium,

@@ -1,6 +1,7 @@
-import { BASE_URL } from "@/constants";
-import { store } from "@/redux";
+import { BASE_URL, SCREENS } from "@/constants";
+import { removeUser, store } from "@/redux";
 import axios from "axios";
+import * as RootNavigation from '../navigation/root-navigator' 
 
 const TIME_OUT = 90000;
 // cau hinh axios by Intercreptor: de bao mat
@@ -68,6 +69,10 @@ protectedAxios.interceptors.response.use(
     return responseObj;
   },
   function (error) {
+    if(error.response.status == 401){
+      store.dispatch(removeUser());
+      RootNavigation.navigate(SCREENS.LOGIN)
+    }
     return Promise.reject(error);
   }
 );
