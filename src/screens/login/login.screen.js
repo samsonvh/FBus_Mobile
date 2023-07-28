@@ -54,7 +54,7 @@ const LoginScreen = () => {
             }
           })
           .catch((error) => {
-            alert("Internal server error");
+          
           });
       }
     } catch (error) {

@@ -44,7 +44,7 @@ const CoordinationDetailScreen = () => {
   const [data, setData] = useState();
   const [isEnabled, setIsEnabled] = useState(false);
   const [isVisibleModal, setIsVisibleModal] = useState(false);
-console.log("DSADASD")
+console.log("ID")
 console.log(id)
   useEffect(() => {
     getCoordinationService(id)
@@ -72,7 +72,7 @@ console.log(id)
         console.error("Error in getCoordinationService:", error);
       });
   }, []);
-
+  console.log(JSON.stringify(data))
   const toggleSwitch = async () => {
     if (!isEnabled) {
       if (task.code) {
@@ -83,6 +83,13 @@ console.log(id)
       }
     } else {
       setIsEnabled(false);
+      addTripStatusesService(
+        id,
+        1,
+       0,
+       0,
+       false
+       )
       dispatch(removeTask());
     }
   };
@@ -212,6 +219,7 @@ console.log(id)
          1,
         0,
         0,
+        true
         )
         dispatch(
           setTask({

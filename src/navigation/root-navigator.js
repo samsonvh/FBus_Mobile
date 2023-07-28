@@ -28,7 +28,7 @@ export function navigate(name, params) {
 const RootNavigator = () => {
   const user = useSelector((state) => state?.user);
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={navigationRef}>
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
