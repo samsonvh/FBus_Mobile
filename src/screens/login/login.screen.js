@@ -29,6 +29,7 @@ const LoginScreen = () => {
       const userInfo = await GoogleSignin.signIn({
         showPlayServicesUpdateDialog: true,
       });
+      console.log("ID Token")
       console.log(userInfo.idToken)
       if (userInfo?.idToken) {
         authService(userInfo.idToken)

@@ -11,17 +11,17 @@ const ListItem = (props) => {
     
     <TouchableOpacity onPress={onPress} style={styles.container}>
       <Text style={styles.busCode}>{data?.bus?.code}</Text>
-     
       <View style={styles.rowContainer}>
-        <Icon name="arrow-circle-right" size={25} color='#0DB14B' />
-        <Text style={styles.destination}>{data?.route?.destination}</Text>
-      </View>
-      <View style={styles.rowContainer}>
-        <Icon name="flag" size={25} color='#0DB14B' />
+        <Icon name="arrow-circle-right" size={25} color='#E61A23' />
         <Text style={styles.beginning}>{data?.route?.beginning}</Text>
         
         
       </View>
+      <View style={styles.rowContainer}>
+        <Icon name="flag" size={25} color='#rgb(0,77,1)' />
+        <Text style={styles.destination}>{data?.route?.destination}</Text>
+      </View>
+     
       <View style={{backgroundColor: backgroundColor, borderRadius: 4}}>
       <Text style={styles.status}>Status:  {data?.status}</Text>
       </View>

@@ -15,7 +15,10 @@ const TripStatusesScreen = () => {
   const tripId = route.params.tripId;
   const stationId = route.params.item.stationId;
   
+
+  console.log("TripID")
   console.log(tripId)
+  console.log("StationId")
   console.log(stationId)
 
   const initialValues = {

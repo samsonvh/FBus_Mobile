@@ -1,11 +1,12 @@
 import { protectedAxios } from "./api-service";
 
-export function addTripStatusesService(tripId, stationId, countUp, countDown) {
+export function addTripStatusesService(tripId, stationId, countUp, countDown,IsFinished) {
   const url = `/TripStatuses`;
 
   const dataSend = {
     TripId: tripId,
     StationId: stationId,
+    IsFinished: IsFinished
   };
 
   if (countUp !== undefined) {

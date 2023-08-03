@@ -8,10 +8,14 @@ import {
   Screen,
 } from "@/components";
 import { removeTask, setDriverInfo, setTask } from "@/redux";
-import { addTripStatusesService, getCoordinationService } from "@/services";
+import {
+  addTripStatusesService,
+  getCoordinationService,
+  removeLocation,
+} from "@/services";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import moment from "moment";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   Alert,
   FlatList,
@@ -41,23 +45,32 @@ const CoordinationDetailScreen = () => {
   const task = useSelector((state) => state?.task);
   const userRole = useSelector((state) => state?.user?.userInfor?.role);
 
+  const hideToggle = route.params.hideToggle;
+
+  console.log(hideToggle);
+
   const [data, setData] = useState();
   const [isEnabled, setIsEnabled] = useState(false);
   const [isVisibleModal, setIsVisibleModal] = useState(false);
-console.log("ID")
-console.log(id)
+  const [stationId, setStationId] = useState();
+  const [busId, setBusId] = useState();
+
+  // console.log("ID");
+  // console.log(id);
+
   useEffect(() => {
     getCoordinationService(id)
       .then((res) => {
-        console.log(JSON.stringify(res));
+        // console.log(JSON.stringify(res));
         if (res.statusCode === 200) {
           if (res && res.driver) {
             dispatch(setDriverInfo(res.driver));
           }
-           
           setData(res);
+          setStationId(res.route.routeStations[0].stationId);
+          setBusId(res.bus.id);
           const codeCheck = `${res?.bus?.code + "-" + res?.bus?.licensePlate}`;
-         
+
           if (codeCheck == task?.code) {
             setIsEnabled(true);
           }
@@ -72,7 +85,13 @@ console.log(id)
         console.error("Error in getCoordinationService:", error);
       });
   }, []);
-  console.log(JSON.stringify(data))
+
+  // console.log("SADASDGSAHGDJSAHG")
+  // console.log(JSON.stringify(data));
+  // console.log("Bus ID")
+  // console.log(busId)
+  // console.log("Route ID")
+  // console.log(routeId)
   const toggleSwitch = async () => {
     if (!isEnabled) {
       if (task.code) {
@@ -83,13 +102,8 @@ console.log(id)
       }
     } else {
       setIsEnabled(false);
-      addTripStatusesService(
-        id,
-        1,
-       0,
-       0,
-       false
-       )
+      addTripStatusesService(id, stationId, 0, 0, true);
+      removeLocation(routeId, busId);
       dispatch(removeTask());
     }
   };
@@ -214,13 +228,7 @@ console.log(id)
       const codeCheck = `${data?.bus?.code + "-" + data?.bus?.licensePlate}`;
       if (code == codeCheck) {
         setIsVisibleModal(false);
-        addTripStatusesService(
-         id,
-         1,
-        0,
-        0,
-        true
-        )
+        addTripStatusesService(id, stationId, 0, 0, false);
         dispatch(
           setTask({
             busId: data.bus.id,
@@ -229,11 +237,9 @@ console.log(id)
           })
         );
         setIsEnabled(true);
-        
-      }else{
+      } else {
         navigation.goBack();
-        alert("Not permission to scan!")
-        
+        alert("Not permission to drive!");
       }
     } catch (error) {
       setIsVisibleModal(false);
@@ -247,10 +253,11 @@ console.log(id)
 
     navigation.navigate(SCREENS.TRIP_STATUSES, {
       item,
-      tripId: id
+      tripId: id,
     });
   };
-
+  // console.log("stationId");
+  // console.log(stationId);
   const renderStation = () => {
     return (
       <FlatList
@@ -281,14 +288,18 @@ console.log(id)
                       marginRight: 12,
                     }}
                   />
-                  <Text style={{fontWeight: "bold", color: 'black', fontSize: 25}}>{item?.station?.code}</Text>
+                  <Text
+                    style={{ fontWeight: "bold", color: "black", fontSize: 25 }}
+                  >
+                    {item?.station?.code}
+                  </Text>
                 </View>
                 <Pressable
                   onPress={() => {
                     onPressStation(item);
                   }}
                 >
-                  <Icon name="edit" size={24} color="blue"/>
+                  <Icon name="edit" size={24} color="blue" />
                 </Pressable>
               </View>
             </>
@@ -355,7 +366,7 @@ console.log(id)
           title={"Trip Detail"}
           rightComponent={
             <>
-              <Pressable onPress={toggleSwitch}>
+              <Pressable onPress={toggleSwitch} disabled={!hideToggle}>
                 <Switch
                   disabled
                   thumbColor={"white"}
