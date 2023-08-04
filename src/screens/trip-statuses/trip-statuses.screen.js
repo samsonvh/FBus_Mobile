@@ -61,7 +61,9 @@ const TripStatusesScreen = () => {
               resetForm();
               navigation.goBack();
             } else {
-              alert("Error from server");
+              alert("Can not because FINISHED Trip");
+              hideLoading();
+              navigation.goBack();
             }
           })
           .catch((error) => {

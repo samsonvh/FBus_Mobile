@@ -76,11 +76,11 @@ const CoordinationDetailScreen = () => {
           }
           // check ID để dùng 1 QR dc bật ở 1 detail coor
         } else {
-          alert("Internal server error");
+          // alert("Internal server error");
         }
       })
       .catch((error) => {
-        alert("Internal server error");
+        // alert("Internal server error");
         // Xử lý lỗi ở đây
         console.error("Error in getCoordinationService:", error);
       });

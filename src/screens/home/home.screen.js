@@ -30,11 +30,11 @@ const HomeScreen = () => {
 
             setCoordinations(newArr);
           } else {
-            alert("Internal server error");
+            // alert("Internal server error");
           }
         })
         .catch((error) => {
-          alert("Internal server error");
+          // alert("Internal server error");
           console.log("Err:", JSON.stringify(error));
         });
     });
